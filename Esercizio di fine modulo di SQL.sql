@@ -112,7 +112,7 @@ ORDER BY
 SELECT
 	rg.Country,
 	YEAR(sl.SaleDate) AS Year,
-    sl.TotalAmount
+    	sl.TotalAmount
 FROM Region rg
 JOIN Sales sl
 	ON rg.RegionID = sl.RegionID
@@ -136,7 +136,7 @@ LIMIT 1;
 -- Approccio 1
 
 SELECT 
-	pd.ProductID, 
+    pd.ProductID, 
     pd.Name
 FROM Product pd
 LEFT JOIN Sales sl 
@@ -155,8 +155,8 @@ WHERE
 
 SELECT
 	pd.Name,
-    pd.Category,
-    sl.SaleDate
+	pd.Category,
+	sl.SaleDate
 FROM Product pd
 INNER JOIN Sales sl
 	ON pd.ProductID = sl.ProductID
