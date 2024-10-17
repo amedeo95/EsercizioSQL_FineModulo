@@ -97,8 +97,9 @@ SELECT
     SUM(sl.TotalAmount) AS TotalRevenue
 FROM 
     Product pd
-INNER JOIN Sales sl 
-	ON pd.ProductID = sl.ProductID
+INNER JOIN
+    Sales sl 
+    ON pd.ProductID = sl.ProductID
 WHERE 
     sl.Quantity IS NOT NULL
 GROUP BY 
@@ -110,55 +111,66 @@ ORDER BY
 
 -- Esporre il fatturato totale per stato per anno. Ordina il risultato per data e per fatturato decrescente
 SELECT
-	rg.Country,
-	YEAR(sl.SaleDate) AS Year,
-    	sl.TotalAmount
-FROM Region rg
-JOIN Sales sl
-	ON rg.RegionID = sl.RegionID
+     rg.Country,
+     YEAR(sl.SaleDate) AS Year,
+     sl.TotalAmount
+FROM 
+     Region rg
+JOIN 
+     Sales sl
+     ON rg.RegionID = sl.RegionID
 ORDER BY 
-	TotalAmount DESC,
+    TotalAmount DESC,
     SaleDate DESC;
     
 -- Qual è la categoria di articoli maggiormente richiesta dal mercato?
 SELECT 
     pd.Category AS Category,
     SUM(sl.Quantity) AS TotalQuantitySold
-FROM Product pd
-JOIN Sales sl
-	ON pd.ProductID = sl.ProductID
-GROUP BY pd.Category
-ORDER BY TotalQuantitySold DESC
+FROM 
+    Product pd
+JOIN
+    Sales sl
+    ON pd.ProductID = sl.ProductID
+GROUP BY 
+    pd.Category
+ORDER BY 
+    TotalQuantitySold DESC
 LIMIT 1;
 
 -- Quali sono, se ci sono, i prodotti invenduti? Proponi due approcci risolutivi differenti. 
 
 -- Approccio 1
-
 SELECT 
     pd.ProductID, 
     pd.Name
-FROM Product pd
-LEFT JOIN Sales sl 
-	ON pd.ProductID = sl.ProductID
-WHERE sl.ProductID IS NULL;
+FROM
+    Product pd
+LEFT JOIN 
+    Sales sl 
+    ON pd.ProductID = sl.ProductID
+WHERE
+    sl.ProductID IS NULL;
 
 -- Approccio 2
 SELECT 
-	ProductID, 
-	Name
-FROM Product
+    ProductID, 
+    Name
+FROM
+    Product
 WHERE 
-	ProductID NOT IN (SELECT ProductID FROM Sales);
+    ProductID NOT IN (SELECT ProductID FROM Sales);
 
--- Esporre l’elenco dei prodotti con la rispettiva ultima data di vendita (la data di vendita più recente).
 
+-- Esporre l’elenco dei prodotti con la rispettiva ultima data di vendita
 SELECT
-	pd.Name,
-	pd.Category,
-	sl.SaleDate
-FROM Product pd
-INNER JOIN Sales sl
-	ON pd.ProductID = sl.ProductID
+    pd.Name,
+    pd.Category,
+    sl.SaleDate
+FROM
+    Product pd
+INNER JOIN 
+    Sales sl
+    ON pd.ProductID = sl.ProductID
 ORDER BY
-	SaleDate DESC;
+    SaleDate DESC;
