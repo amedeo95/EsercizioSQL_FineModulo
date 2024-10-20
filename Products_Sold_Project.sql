@@ -118,7 +118,7 @@ ORDER BY
 
 --  Display total sales by state by year. Sort the result by date and by decreasing turnover
 SELECT
-	nt.Nation
+    nt.Nation
    ,YEAR(sl.SaleDate) AS Year
    ,sl.TotalAmount
 FROM 
